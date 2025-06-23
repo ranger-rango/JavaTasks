@@ -10,8 +10,8 @@ import main.java.com.habil.model.RotateBackups;
 
 public class BackupManager 
 {
-    private static final String BACKUP_DIR = "backups";
-    private static final int INTERVAL_SECONDS = 60;
+    private static final String BACKUP_DIR = "ProcessBuilder/backups";
+    private static final int INTERVAL_SECONDS = 2;
     public static void main(String[] args)
     {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();

@@ -9,9 +9,9 @@ import java.util.List;
 
 public class CreatePGDump
 {
-    private static final String BACKUP_DIR = "backups";
-    private static final String PG_DUMP_PATH = "";
-    private static final String DB_NAME = "Exams";
+    private static final String BACKUP_DIR = "ProcessBuilder/backups";
+    private static final String PG_DUMP_PATH = "/usr/bin/pg_dump";
+    private static final String DB_NAME = "online_exams";
 
     public static void performBackup() throws IOException, InterruptedException
     {

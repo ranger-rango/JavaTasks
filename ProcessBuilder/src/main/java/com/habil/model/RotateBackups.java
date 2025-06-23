@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 public class RotateBackups
 {
-    private static final String BACKUP_DIR = "backups";
+    private static final String BACKUP_DIR = "ProcessBuilder/backups";
     private static final int MAX_BACKUPS = 10;
     public static void rotateBackups() throws IOException
     {
