@@ -1,14 +1,12 @@
-package com.habil.app;
+package com.habil.models;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import com.habil.models.DbSelectQuery;
-import com.habil.models.DbUpdateQuery;
-import com.habil.models.HikariConnection;
+import java.util.Scanner;
 
 public class EmployeesDbManager
 {
@@ -47,6 +45,33 @@ public class EmployeesDbManager
         DbUpdateQuery.updateOperation(connection, sql, params);
     }
 
+    public static void callStoredFunctions(Connection connection) throws Exception
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Function Name: ");
+        String functionName = scanner.nextLine();
+
+        List<Object> params = List.of("Engineering");
+        String sql = "SELECT * FROM " + functionName + "(?);";
+        ResultSet results = CallPsqlFunctions.callPsqlFunctions(connection, sql, params);
+        ResultSetMetaData metaData = results.getMetaData();
+        int colCount = metaData.getColumnCount();
+
+        scanner.close();
+
+        while (results.next())
+        {
+            for (int i = 1; i <= colCount; i++)
+            {
+                String colName = metaData.getColumnLabel(i);
+                Object value = results.getObject(i);
+                System.out.println(colName + " = " + value);
+            }
+
+            System.out.println("_________________________________");
+        }
+    }
+
     public static void displayTable(Connection connection) throws Exception
     {
         String sql = """
@@ -57,28 +82,20 @@ public class EmployeesDbManager
         List<Object> params = List.of();
 
         ResultSet resultSet = DbSelectQuery.readOperation(connection, sql, params);
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int colCount = metaData.getColumnCount();
         while (resultSet.next())
         {
-            String empEmail = resultSet.getString("employee_email");
-            String surname = resultSet.getString("surname");
-            String firstName = resultSet.getString("first_name");
+            for (int i = 1; i <= colCount; i++)
+            {
+                String colName = metaData.getColumnLabel(i);
+                Object value = resultSet.getObject(i);
 
-            System.out.println(empEmail + ", " + surname + ", " + firstName);
+                System.out.println(colName + " = " + value);
+            }
+            System.out.println("_________________________________");
         }
 
     }
-    public static void main(String[] args) throws Exception
-    {
-        Connection connection = HikariConnection.getConnection();
-        // insert(connection);
-        // update(connection);
-        // delete(connection);
 
-        displayTable(connection);
-
-        connection.close();
-        HikariConnection.shutdown();
-
-        // create a query constructor for each situation 
-    }
 }
