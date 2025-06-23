@@ -16,6 +16,7 @@ public class RSAAsymm
         KeyPair keyPair = RSAkeyPairGen.keyGen();
 
         String secret = "Hello, secure world!";
+        String modified_secret = "Hello, secure world1";
 
         byte[] cipherText = RSAEnc.encrypt(secret, keyPair.getPublic());
 
@@ -24,10 +25,12 @@ public class RSAAsymm
         byte[] signature = RSASignData.signData(secret, keyPair.getPrivate());
 
         boolean isValid = RSAVerifySignature.verifySignature(secret, signature, keyPair.getPublic());
+        boolean isTampered = RSAVerifySignature.verifySignature(modified_secret, signature, keyPair.getPublic());
 
         System.out.println("Encrypted (Base64): " + Base64.getEncoder().encodeToString(cipherText));
         System.out.println("Decrypted: " + decrypted);
         System.out.println("Signature (Base64): " + Base64.getEncoder().encodeToString(signature));
         System.out.println("Signature Valid: " + isValid);
+        System.out.println("(Integrity) Tampered With: " + !isTampered);
     }
 }
