@@ -1,0 +1,102 @@
+| Symbol| Meaning                        |    |
+| ------| -------------------------------| -- |
+| .     | Any character (except newline) |    |
+| \d    | Digit \[0-9]                   |    |
+| \D    | Non-digit                      |    |
+| \w    | Word character \[a-zA-Z\_0-9]  |    |
+| \W    | Non-word character             |    |
+| \s    | Whitespace                     |    |
+| \S    | Non-whitespace                 |    |
+| ^     | Beginning of line              |    |
+| $     | End of line                    |    |
+| []    | Character class                |    |
+| ()    | Capturing group                |    |
+| `     | `                              | OR |
+| *     | 0 or more                      |    |
+| +     | 1 or more                      |    |
+| ?     | 0 or 1                         |    |
+| {n}   | Exactly n                      |    |
+| {n,}  | n or more                      |    |
+| {n,m} | Between n and m                |    |
+
+
+The Java regex pattern:
+
+```
+"^[\\w.-]+@[\\w.-]+\\.\\w+$"
+```
+
+is commonly used to **validate email addresses** (though not perfectly, as it doesn't cover all valid cases per the email standard). Here's a detailed breakdown:
+
+---
+
+### 📌 **Full Regex**: `^[\\w.-]+@[\\w.-]+\\.\\w+$`
+
+#### 🔹 `^`
+
+* **Start of the string** anchor.
+* Ensures matching begins at the start.
+
+#### 🔹 `[\\w.-]+`
+
+* Matches **one or more** (`+`) of the following:
+
+  * `\\w` → any **word character** (equivalent to `[a-zA-Z0-9_]`)
+  * `.` → a literal dot (.)
+  * `-` → a literal hyphen (-)
+
+So this part matches the **local part** of the email: `john.doe`, `user-name`, etc.
+
+> ⚠️ In Java strings, backslashes must be escaped (`\\w`), otherwise you'd write just `\w` in non-Java regex tools.
+
+#### 🔹 `@`
+
+* Matches the **@ symbol** — required in every email.
+
+#### 🔹 `[\\w.-]+`
+
+* Same as before — matches the **domain name part**, like `gmail`, `example`, `co-uk`.
+
+#### 🔹 `\\.`
+
+* Escaped dot (`.`) — ensures there's a **dot** between the domain and top-level domain.
+
+#### 🔹 `\\w+`
+
+* Matches the **top-level domain** (TLD), like `com`, `net`, `org`.
+
+#### 🔹 `$`
+
+* **End of string** anchor.
+
+---
+
+### ✅ **Examples that Match**:
+
+* `john.doe@example.com`
+* `user-name@my-site.co`
+* `a_b.c-d@domain.io`
+
+---
+
+### ❌ **Examples that Won’t Match**:
+
+* `john@` — missing domain
+* `@example.com` — missing local part
+* `john.doe@domain` — missing TLD
+* `john.doe@domain.` — TLD missing or malformed
+
+---
+
+### 🔍 Notes & Limitations
+
+* This regex **does not handle** valid but uncommon email cases like:
+
+  * Quoted local parts (`"john.doe"@example.com`)
+  * TLDs with hyphens (which are valid)
+  * Internationalized domains
+* For stricter or more permissive matching, consider using a more advanced regex or a library like Apache Commons Validator.
+
+---
+
+Would you like me to improve this regex to make it more robust or RFC 5322 compliant?

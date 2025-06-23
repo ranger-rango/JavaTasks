@@ -1,0 +1,4 @@
+Main-Class: com.habil.calculator.Main
+Class-Path: MathLibrary.jar
+
+

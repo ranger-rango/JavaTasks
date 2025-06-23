@@ -1,0 +1,4 @@
+Hello, ni hau, marhaba ?
+nice to meet you
+Written with PrintWriter
+Noice :)
