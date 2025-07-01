@@ -17,8 +17,10 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 import com.opencsv.CSVReader;
 
-public class CleanCSV {
-    public static void cleanCSV() throws IOException {
+public class CleanCSV
+{
+    public static void cleanCSV() throws IOException
+    {
         Pattern emailPattern = Pattern.compile("^[\\w-.]+@[\\w-.]+\\.[a-zA-Z]{2,}$");
         Pattern mobilPattern = Pattern.compile("^(?:\\d{3}|\\d{1})\\d{9}$");
         Pattern idPattern = Pattern.compile("^[\\d]+$");
@@ -36,11 +38,14 @@ public class CleanCSV {
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-        try (CSVReader reader = new CSVReader(new FileReader("member_details.csv"))) {
+        try (CSVReader reader = new CSVReader(new FileReader("member_details.csv")))
+        {
             String[] line;
             boolean isFirst = true;
-            while ((line = reader.readNext()) != null) {
-                if (isFirst) {
+            while ((line = reader.readNext()) != null)
+            {
+                if (isFirst)
+                {
                     isFirst = false;
                     continue;
                 }
@@ -58,33 +63,39 @@ public class CleanCSV {
 
                 String[] sanitisedData = { id, name, mobileNumber, emailAddress, gender };
 
-                if (emailMatcher.matches() && mobileMatcher.matches() && idMatcher.matches()
-                        && !gender.trim().isEmpty()) {
-                    executorService.submit(
-                            new WriteXL(sanitisedData, gender.equalsIgnoreCase("male") ? maleCounter : femaleCounter,
-                                    gender.equalsIgnoreCase("male") ? maleSheet : femaleSheet));
-                } else if (emailMatcher.matches() && mobileMatcher.matches() && idMatcher.matches()
-                        && gender.trim().isEmpty()) {
+                if (emailMatcher.matches() && mobileMatcher.matches() && idMatcher.matches() && !gender.trim().isEmpty())
+                {
+                    executorService.submit(new WriteXL(sanitisedData, gender.equalsIgnoreCase("male") ? maleCounter : femaleCounter, gender.equalsIgnoreCase("male") ? maleSheet : femaleSheet));
+                }
+                else if (emailMatcher.matches() && mobileMatcher.matches() && idMatcher.matches() && gender.trim().isEmpty())
+                {
                     executorService.submit(new WriteXL(sanitisedData, noGenderCounter, noGenderSheet));
-                } else if (!emailMatcher.matches() || !mobileMatcher.matches() || !idMatcher.matches()) {
+                }
+                else if (!emailMatcher.matches() || !mobileMatcher.matches() || !idMatcher.matches())
+                {
                     executorService.submit(new WriteXL(sanitisedData, errCounter, errSheet));
                 }
 
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
 
         executorService.shutdown();
-        try {
-            if (!executorService.awaitTermination(10, TimeUnit.MINUTES)) {
+        try
+        {
+            if (!executorService.awaitTermination(10, TimeUnit.MINUTES))
+            {
                 System.err.println("Executor did not terminate in time");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        try (FileOutputStream fos = new FileOutputStream("member_details.xlsx")) {
+        try (FileOutputStream fos = new FileOutputStream("member_details.xlsx"))
+        {
             workbook.write(fos);
             ((SXSSFWorkbook) workbook).dispose();
         }
