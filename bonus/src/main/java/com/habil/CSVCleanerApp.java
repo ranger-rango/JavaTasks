@@ -7,3 +7,6 @@ public class CSVCleanerApp {
         CleanCSV.cleanCSV();
     }
 }
+
+// time MAVEN_OPTS="-Xmx512m" mvn exec:java
+// -Dexec.mainClass="com.habil.CSVCleanerApp"

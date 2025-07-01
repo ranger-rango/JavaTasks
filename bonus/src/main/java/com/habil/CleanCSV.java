@@ -12,7 +12,8 @@ import java.util.regex.Pattern;
 
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+// import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.opencsv.CSVReader;
 
@@ -26,7 +27,8 @@ public class CleanCSV {
         AtomicInteger noGenderCounter = new AtomicInteger();
         AtomicInteger errCounter = new AtomicInteger();
 
-        Workbook workbook = new XSSFWorkbook();
+        Workbook workbook = new SXSSFWorkbook();
+        ((SXSSFWorkbook) workbook).setCompressTempFiles(true);
         Sheet maleSheet = workbook.createSheet("male_member_details");
         Sheet femaleSheet = workbook.createSheet("female_member_details");
         Sheet noGenderSheet = workbook.createSheet("gender_missing_member_details");
@@ -75,7 +77,7 @@ public class CleanCSV {
 
         executorService.shutdown();
         try {
-            if (!executorService.awaitTermination(1, TimeUnit.MINUTES)) {
+            if (!executorService.awaitTermination(10, TimeUnit.MINUTES)) {
                 System.err.println("Executor did not terminate in time");
             }
         } catch (InterruptedException e) {
@@ -84,6 +86,7 @@ public class CleanCSV {
 
         try (FileOutputStream fos = new FileOutputStream("member_details.xlsx")) {
             workbook.write(fos);
+            ((SXSSFWorkbook) workbook).dispose();
         }
         workbook.close();
     }
