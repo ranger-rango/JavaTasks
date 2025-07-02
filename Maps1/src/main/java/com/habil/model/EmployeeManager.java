@@ -116,11 +116,17 @@ public class EmployeeManager
 
     public void displayEmployeesByDepartmentFilter(String depName)
     {
-        depEmployee.values().stream()
-        .flatMap(List::stream)
-        .filter(employee -> employee.getDepartment().equalsIgnoreCase(depName))
+        Objects.requireNonNull(depName, "Department Name cannot be null");
+        // depEmployee.values().stream()
+        // .flatMap(List::stream)
+        // .filter(employee -> employee.getDepartment().equalsIgnoreCase(depName))
+        // .forEach(employee -> 
+        // System.out.println("ID: " + employee.getEmployeeId() + "Number: " + employee.getEmployeeNumber() + "Name: " + employee.getName() + "Department: " + employee.getDepartment())
+        // );
+
+        depEmployee.get(depName).stream()
         .forEach(employee -> 
-        System.out.println("ID: " + employee.getEmployeeId() + "Number: " + employee.getEmployeeNumber() + "Name: " + employee.getName() + "Department: " + employee.getDepartment())
+        System.out.println("ID: " + employee.getEmployeeId() + ", Number: " + employee.getEmployeeNumber() + ", Name: " + employee.getName() + ", Department: " + employee.getDepartment())
         );
     }
 
@@ -137,5 +143,6 @@ public class EmployeeManager
         .reduce(0, Integer::sum);
 
         System.out.println("Total Employees: " + total);
+        System.out.println("Total Departments: " + depEmployee.values().size());
     }
 }

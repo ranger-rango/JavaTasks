@@ -28,11 +28,13 @@ public class Maps1
         employeeManager.addEmployee(employee5);
         employeeManager.addEmployee(employee6);
 
+        employeeManager.employeeCount();
         employeeManager.displayEmployeesByDepartment();
+        System.out.println();
 
-        employeeManager.getEmployee(1);
-        employeeManager.getEmployee("102");
-        employeeManager.getEmployee("Merk smith");
+        System.out.println(employeeManager.getEmployee(1).get());
+        System.out.println(employeeManager.getEmployee("102").get());
+        System.out.println(employeeManager.getEmployee("Merk smith").get());
 
         EmployeeDetails updatedEmployee4 = new EmployeeDetails(4, "104", "Merk Smith", "R&D");
         EmployeeDetails updatedEmployee6 = new EmployeeDetails(6, "106", "Valerie Valentine", "Comms");
@@ -45,7 +47,11 @@ public class Maps1
         System.out.println();
         employeeManager.displayEmployeesByDepartment();
 
+        System.out.println();
+        employeeManager.displayEmployeesByDepartmentFilter("Racing");
 
+        System.out.println();
+        employeeManager.employeeCount();
 
     }
 }

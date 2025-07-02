@@ -21,6 +21,7 @@ public class CSVCleanerAppV2
 {
     public static void main(String[] args) throws IOException, FileNotFoundException
     {
+        long mainTime = System.currentTimeMillis();
         Pattern emailPattern = Pattern.compile("^[\\w-.]+@[\\w-.]+\\.[a-zA-Z]{2,}$");
         Pattern mobilPattern = Pattern.compile("^(?:\\d{3}|\\d{1})\\d{9}$");
         Pattern idPattern = Pattern.compile("^[\\d]+$");
@@ -132,6 +133,7 @@ public class CSVCleanerAppV2
             
         });
 
+        long threadTime = System.currentTimeMillis();
         csvProcessor.start();
         xlsWriter.start();
 
@@ -156,6 +158,10 @@ public class CSVCleanerAppV2
             e.printStackTrace();
         }
 
+        long endTime = System.currentTimeMillis();
+
+        System.out.println("Main() completed in " + (endTime - threadTime) + " ms");
+        System.out.println("Threaded Job completed in " + (endTime - mainTime) + " ms");
         
     }
 }

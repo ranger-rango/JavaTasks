@@ -6,12 +6,14 @@ public class EmployeeDetails
     private String employeeNumber;
     private String name;
     private String department;
-    public EmployeeDetails(int employeeId, String employeeNumber, String name, String department) {
+    public EmployeeDetails(int employeeId, String employeeNumber, String name, String department)
+    {
         this.employeeId = employeeId;
         this.employeeNumber = employeeNumber;
         this.name = name;
         this.department = department;
     }
+    
     public int getEmployeeId() 
     {
         return employeeId;
@@ -46,5 +48,12 @@ public class EmployeeDetails
         this.department = department;
     }
 
+    @Override
+    public String toString() {
+        return "EmployeeDetails [employeeId=" + employeeId + ", employeeNumber=" + employeeNumber + ", name=" + name
+                + ", department=" + department + "]";
+    }
+
+    
     
 }
