@@ -33,7 +33,7 @@ public class PassRefVal
         System.out.println();
 
         updateProduct(product);
-        System.out.println("Outside updateProduct(), ()" + product.productName + ", " + product.price + ")");
+        System.out.println("Outside updateProduct(), (" + product.productName + ", " + product.price + ")");
 
         System.out.println();
 

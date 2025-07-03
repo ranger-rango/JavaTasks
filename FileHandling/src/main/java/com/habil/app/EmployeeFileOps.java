@@ -60,14 +60,17 @@ public class EmployeeFileOps
 
         if (scanner.nextLine().equalsIgnoreCase("y"))
         {
+            System.out.print("Employee Number: ");
             String empNum = scanner.nextLine();
+            System.out.print("Employee Name: ");
             String empName = scanner.nextLine();
+            System.out.print("Net Salary: ");
             double netSalary = scanner.nextDouble();
             employee = new EmployeeProperties(empNum, empName, netSalary);
         }
         scanner.close();
         
-        if ((new File(filePath).length() == 0) && !(employee != null))
+        if ((new File(filePath).length() == 0) && (employee != null))
         {
             List<EmployeeProperties> employees = new ArrayList<>();
             employees.add(employee);
