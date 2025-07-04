@@ -5,14 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.habil.models.HikariConnection;
+// import com.habil.models.HikariConnection;
+import com.habil.models.NormalConnection;
 
 public class JdbcTutorial
 {
     public static void main(String[] args) throws Exception
     {
         String sql = "SELECT * FROM employees";
-        Connection connection = HikariConnection.getConnection();
+        // Connection connection = HikariConnection.getConnection();
+        Connection connection = NormalConnection.getConnection();
         try
         {
             connection.setAutoCommit(false);
@@ -39,7 +41,7 @@ public class JdbcTutorial
         finally
         {
             connection.close();
-            HikariConnection.shutdown();
+            // HikariConnection.shutdown();
         }
     }
 }
