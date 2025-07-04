@@ -1,10 +1,14 @@
 com/habil/models/EmployeesDbManager.class
 com/habil/app/JdbcTutorial.class
+com/habil/models/ResultSetProcessor.class
 com/habil/app/JdbcApp.class
 com/habil/models/HikariConnection.class
-com/habil/models/NormalConnection.class
-com/habil/models/LibraryDbManager.class
+com/habil/models/WriteDbProperties.class
+com/habil/app/JdbcAppV2.class
 com/habil/models/DbUpdateQuery.class
 com/habil/models/ExamsDbManager.class
 com/habil/models/CallPsqlFunctions.class
 com/habil/models/DbSelectQuery.class
+com/habil/models/NormalConnection.class
+com/habil/models/LibraryDbManager.class
+com/habil/models/AnyDbManager.class
